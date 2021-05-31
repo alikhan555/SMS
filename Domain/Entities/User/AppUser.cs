@@ -10,6 +10,9 @@ namespace Domain.Entities.User
 {
     public class AppUser : IdentityUser, IAuditableEntity
     {
+        public int SchoolId { get; set; }
+        public int CampusId { get; set; }
+
         public DateTime Created { get; set; }
         public string CreatedBy { get; set; }
         public DateTime? LastModified { get; set; }

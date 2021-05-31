@@ -12,15 +12,21 @@ namespace Infrastructure.Identity.Services
 {
     public class TokenService
     {
-        public string CreateToken(AppUser user)
+        public string CreateToken(AppUser user, IEnumerable<string> roles)
         {
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.Email, user.Email),
-                //new Claim(ClaimTypes.Role, user),
+                new Claim("schoolid", user.SchoolId.ToString()),
+                new Claim("campusid", user.CampusId.ToString()),
             };
+
+            foreach(var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ThisIsATopSecretKey"));
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
