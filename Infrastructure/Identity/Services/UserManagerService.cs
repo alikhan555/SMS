@@ -2,10 +2,12 @@
 using Application.Common.Interfaces;
 using Application.Common.Models;
 using Domain.Entities.User;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,16 +19,19 @@ namespace Infrastructure.Identity.Services
         private readonly RoleManager<AppRole> _roleManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly TokenService _tokenService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public UserManagerService(UserManager<AppUser> userManager,
             RoleManager<AppRole> roleManager,
             SignInManager<AppUser> signInManager,
-            TokenService tokenService)
+            TokenService tokenService,
+            IHttpContextAccessor httpContextAccessor)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
             _tokenService = tokenService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<Result<string>> CreateUserAsync(AppUser newUser, string password, IEnumerable<string> roles)
@@ -66,6 +71,12 @@ namespace Infrastructure.Identity.Services
             }
 
             return Result<UserAuthentication>.Failure("Username or password is invalid.");
+        }
+
+        public string GetCurrentUserId()
+        {
+            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return userId;
         }
     }
 }

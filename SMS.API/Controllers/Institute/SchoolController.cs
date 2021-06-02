@@ -1,8 +1,10 @@
-﻿using Application.InstituteManagement.Schools.Commands.CreateSchool;
+﻿using Application.Common.Enums;
+using Application.InstituteManagement.Schools.Commands.CreateSchool;
 using Application.InstituteManagement.Schools.Commands.DeleteSchool;
 using Application.InstituteManagement.Schools.Commands.EditSchool;
 using Application.InstituteManagement.Schools.Queries.GetSchoolDetails;
 using Application.InstituteManagement.Schools.Queries.GetSchools;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -26,7 +28,8 @@ namespace SMS.API.Controllers.Institute
             return ResultHandler(await Mediator.Send(new GetSchoolDetailsQuery { Id = id }, cancellationToken));
         }
 
-        [HttpPost]
+        [HttpPost("Create")]
+        [Authorize(Roles = Role.SchoolOwner)]
         public async Task<ActionResult> Create(CreateSchoolCommand command, CancellationToken cancellationToken)
         {
             return ResultHandler(await Mediator.Send(command, cancellationToken));

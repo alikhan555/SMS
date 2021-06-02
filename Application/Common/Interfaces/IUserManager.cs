@@ -12,5 +12,6 @@ namespace Application.Common.Interfaces
     {
         Task<Result<string>> CreateUserAsync(AppUser user, string password, IEnumerable<string> roles);
         Task<Result<UserAuthentication>> LoginUserAsync(string username, string password);
+        public string GetCurrentUserId();
     }
 }
