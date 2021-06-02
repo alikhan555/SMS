@@ -23,7 +23,7 @@ namespace Infrastructure.Identity.Services
                 new Claim("campusid", user.CampusId.ToString()),
             };
 
-            foreach(var role in roles)
+            foreach (var role in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }

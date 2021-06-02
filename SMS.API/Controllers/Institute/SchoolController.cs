@@ -29,7 +29,7 @@ namespace SMS.API.Controllers.Institute
         }
 
         [HttpPost("Create")]
-        [Authorize(Roles = Role.SchoolOwner)]
+        [Authorize(Roles = Role.Developer)]
         public async Task<ActionResult> Create(CreateSchoolCommand command, CancellationToken cancellationToken)
         {
             return ResultHandler(await Mediator.Send(command, cancellationToken));
