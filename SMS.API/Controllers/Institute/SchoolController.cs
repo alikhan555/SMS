@@ -17,18 +17,20 @@ namespace SMS.API.Controllers.Institute
     public class SchoolController : BaseApiController
     {
         [HttpGet]
+        [Authorize(Roles = Role.Developer)]
         public async Task<IActionResult> Get(CancellationToken cancellationToken)
         {
             return ResultHandler(await Mediator.Send(new GetSchoolsQuery(), cancellationToken));
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = Role.Developer)]
         public async Task<IActionResult> Get(int id, CancellationToken cancellationToken)
         {
             return ResultHandler(await Mediator.Send(new GetSchoolDetailsQuery { Id = id }, cancellationToken));
         }
 
-        [HttpPost("Create")]
+        [HttpPost]
         [Authorize(Roles = Role.Developer)]
         public async Task<ActionResult> Create(CreateSchoolCommand command, CancellationToken cancellationToken)
         {
@@ -36,6 +38,7 @@ namespace SMS.API.Controllers.Institute
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = Role.Developer)]
         public async Task<IActionResult> Edit(int id, EditSchoolCommand command, CancellationToken cancellationToken)
         {
             if (id != command.Id) return BadRequest();
@@ -43,9 +46,18 @@ namespace SMS.API.Controllers.Institute
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = Role.Developer)]
         public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
         {
             return ResultHandler(await Mediator.Send(new DeleteSchoolCommand { Id = id }, cancellationToken));
+        }
+
+        [HttpPut("Status/{id}")]
+        [Authorize(Roles = Role.Developer)]
+        public async Task<IActionResult> Status(string status, CancellationToken cancellationToken)
+        {
+            // fake
+            return ResultHandler(await Mediator.Send(new DeleteSchoolCommand { Id = 0 }, cancellationToken));
         }
     }
 }
