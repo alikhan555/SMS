@@ -32,6 +32,8 @@ namespace Infrastructure
             // Identity Configuration
             services.AddIdentityCore<AppUser>(options =>
             {
+                options.User.RequireUniqueEmail = false;
+
                 options.Password.RequireDigit = false;
                 options.Password.RequiredLength = 3;
                 options.Password.RequireUppercase = false;

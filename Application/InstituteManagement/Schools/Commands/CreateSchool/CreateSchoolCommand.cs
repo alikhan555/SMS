@@ -26,16 +26,13 @@ namespace Application.InstituteManagement.Schools.Commands.CreateSchool
     public class CreateSchoolCommandHandler : IRequestHandler<CreateSchoolCommand, Result<int>>
     {
         private ISMSDbContext _context { get; }
-        private IDateTime _datetime { get; }
         private IUserManager _userManager { get; }  
 
         public CreateSchoolCommandHandler(
             ISMSDbContext context,
-            IDateTime dateTime,
             IUserManager userManager)
         {
             _context = context;
-            _datetime = dateTime;
             _userManager = userManager;
         }
 
@@ -46,7 +43,8 @@ namespace Application.InstituteManagement.Schools.Commands.CreateSchool
             {
                 Name = request.Name,
                 Initial = request.Initial,
-                NTN = request.NTN
+                NTN = request.NTN,
+                EntityStatus = EntityStatus.Active
             };
 
             _context.Schools.Add(school);
@@ -60,9 +58,6 @@ namespace Application.InstituteManagement.Schools.Commands.CreateSchool
                 UserName = request.OwnerEmail,
                 SchoolId = school.Id,
                 CampusId = 0,
-                EntityStatus = EntityStatus.Active,
-                Created = _datetime.UtcNow,
-                CreatedBy = _userManager.GetCurrentUserId()
             };
 
             var identityResult = await _userManager.CreateUserAsync(owner, request.OwnerPassword, new List<string> { Role.SchoolOwner });

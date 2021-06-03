@@ -1,29 +1,31 @@
 ﻿using Application.Common.Interfaces;
 using Domain.Entities.Institute;
-using Infrastructure.Persistence.Configuration.Institute;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Domain.Entities.Shared;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Domain.Entities.User;
+using Application.Common.Enums;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace Infrastructure.Persistence
 {
     public class SMSDbContext : IdentityDbContext<AppUser, AppRole, string>, ISMSDbContext
     {
-        public SMSDbContext(DbContextOptions options) : base(options)
+        private readonly IDateTime _dateTime;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public SMSDbContext(DbContextOptions options, IDateTime dateTime, IHttpContextAccessor httpContextAccessor) : base(options)
         {
+            _dateTime = dateTime;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public DbSet<School> Schools { get; set; }
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,16 +37,19 @@ namespace Infrastructure.Persistence
         {
             foreach (EntityEntry<IAuditableEntity> entry in ChangeTracker.Entries<IAuditableEntity>())
             {
+                var currentUserId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        //entry.Entity.CreatedBy = _currentUserService.UserId;
-                        entry.Entity.Created = DateTime.Now;
+                        entry.Entity.CreatedBy = currentUserId;
+                        entry.Entity.Created = _dateTime.UtcNow;
+                        entry.Entity.EntityStatus = EntityStatus.Active;
                         break;
 
                     case EntityState.Modified:
-                        //entry.Entity.LastModifiedBy = _currentUserService.UserId;
-                        entry.Entity.LastModified = DateTime.Now;
+                        entry.Entity.LastModifiedBy = currentUserId;
+                        entry.Entity.LastModified = _dateTime.UtcNow;
                         break;
                 }
             }
