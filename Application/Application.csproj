@@ -5,6 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Common\DTOs\**" />
+    <Compile Remove="Common\NewFolder\**" />
+    <EmbeddedResource Remove="Common\DTOs\**" />
+    <EmbeddedResource Remove="Common\NewFolder\**" />
+    <None Remove="Common\DTOs\**" />
+    <None Remove="Common\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentValidation.AspNetCore" Version="10.1.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.5" />
@@ -12,11 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Common\DTOs\" />
-    <Folder Include="Common\NewFolder\" />
   </ItemGroup>
 
 </Project>

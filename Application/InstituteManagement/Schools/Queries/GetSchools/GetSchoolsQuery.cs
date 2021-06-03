@@ -27,7 +27,9 @@ namespace Application.InstituteManagement.Schools.Queries.GetSchools
 
         public async Task<Result<List<SchoolDto>>> Handle(GetSchoolsQuery request, CancellationToken cancellationToken)
         {
-            var schools = await _context.Schools.Select(x => new SchoolDto { Id = x.Id, Name = x.Name, Initial = x.Initial, NTN = x.NTN }).ToListAsync();
+            var schools = await _context.Schools
+                .Where(x => x.EntityStatus != Common.Enums.EntityStatus.InActive)
+                .Select(x => new SchoolDto { Id = x.Id, Name = x.Name, Initial = x.Initial, NTN = x.NTN }).ToListAsync();
 
             return Result<List<SchoolDto>>.Success(schools);
         }
