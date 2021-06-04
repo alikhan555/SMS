@@ -78,5 +78,10 @@ namespace Infrastructure.Identity.Services
             var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             return userId;
         }
+
+        public async Task<AppUser> GetUserByName(string name)
+        {
+            return await _userManager.FindByNameAsync(name);
+        }
     }
 }

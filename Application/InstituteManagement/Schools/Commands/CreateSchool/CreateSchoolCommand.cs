@@ -61,7 +61,7 @@ namespace Application.InstituteManagement.Schools.Commands.CreateSchool
             };
 
             var identityResult = await _userManager.CreateUserAsync(owner, request.OwnerPassword, new List<string> { Role.SchoolOwner });
-            if (!identityResult.Succeeded) return Result<int>.Failure(HttpStatus.BadRequest, "School owner could not be created.");
+            if (!identityResult.Succeeded) return Result<int>.Failure(HttpStatus.BadRequest, identityResult.Errors);
 
             // bind school with school owner
             school = _context.Schools.Find(school.Id);

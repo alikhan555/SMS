@@ -26,7 +26,9 @@ namespace Application.InstituteManagement.Schools.Queries.GetSchoolDetails
 
         public async Task<Result<SchoolDetailsDto>> Handle(GetSchoolDetailsQuery request, CancellationToken cancellationToken)
         {
-            var school = await _context.Schools.FindAsync(request.Id);
+            var school = _context.Schools
+                .Where(x => x.EntityStatus != EntityStatus.Deleted)
+                .SingleOrDefault(x => x.Id == request.Id);
 
             if (school == null) return Result<SchoolDetailsDto>.Failure(HttpStatus.NotFound, $"School with id: {request.Id} not found.");
 
