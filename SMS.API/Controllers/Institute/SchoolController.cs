@@ -1,14 +1,11 @@
 ﻿using Application.Common.Enums;
+using Application.InstituteManagement.Schools.Commands.ChangeSchoolStatus;
 using Application.InstituteManagement.Schools.Commands.CreateSchool;
-using Application.InstituteManagement.Schools.Commands.DeleteSchool;
 using Application.InstituteManagement.Schools.Commands.EditSchool;
 using Application.InstituteManagement.Schools.Queries.GetSchoolDetails;
 using Application.InstituteManagement.Schools.Queries.GetSchools;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -45,19 +42,11 @@ namespace SMS.API.Controllers.Institute
             return ResultHandler(await Mediator.Send(command, cancellationToken));
         }
 
-        [HttpDelete("{id}")]
+        [HttpPut("Status")]
         [Authorize(Roles = Role.Developer)]
-        public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
+        public async Task<IActionResult> ChangeStatus(int id, string status, CancellationToken cancellationToken)
         {
-            return ResultHandler(await Mediator.Send(new DeleteSchoolCommand { Id = id }, cancellationToken));
-        }
-
-        [HttpPut("Status/{id}")]
-        [Authorize(Roles = Role.Developer)]
-        public async Task<IActionResult> Status(string status, CancellationToken cancellationToken)
-        {
-            // fake
-            return ResultHandler(await Mediator.Send(new DeleteSchoolCommand { Id = 0 }, cancellationToken));
+            return ResultHandler(await Mediator.Send(new ChangeSchoolStatusCommand { Id = id, status = status }, cancellationToken));
         }
     }
 }
