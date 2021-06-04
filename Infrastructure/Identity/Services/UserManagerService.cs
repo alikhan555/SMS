@@ -83,5 +83,18 @@ namespace Infrastructure.Identity.Services
         {
             return await _userManager.FindByNameAsync(name);
         }
+
+        public async Task<AppUser> GetUserById(string id)
+        {
+            return await _userManager.FindByIdAsync(id);
+        }
+
+        public async Task<Result<string>> UpdateUser(AppUser user)
+        {
+            var identityResult = await _userManager.UpdateAsync(user);
+
+            if (identityResult.Succeeded) return Result<string>.Success();
+            else return Result<string>.Failure(identityResult.Errors.Select(x => x.Description));
+        }
     }
 }

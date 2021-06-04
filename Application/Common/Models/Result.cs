@@ -25,6 +25,15 @@ namespace Application.Common.Models
             };
         }
 
+        public static Result<T> Success()
+        {
+            return new Result<T>
+            {
+                Succeeded = true,
+                HttpStatus = HttpStatus.OK,
+            };
+        }
+
         public static Result<T> Failure(HttpStatus httpStatus, IEnumerable<string> errors)
         {
             return new Result<T>

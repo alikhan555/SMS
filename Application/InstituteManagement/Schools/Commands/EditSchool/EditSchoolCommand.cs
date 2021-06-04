@@ -24,30 +24,37 @@ namespace Application.InstituteManagement.Schools.Commands.EditSchool
     public class EditSchoolCommandHandler : IRequestHandler<EditSchoolCommand, Result<Unit>>
     {
         ISMSDbContext _context { get; }
+        IUserManager _userManager { get; }
 
-        public EditSchoolCommandHandler(ISMSDbContext context)
+        public EditSchoolCommandHandler(ISMSDbContext context, IUserManager userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public async Task<Result<Unit>> Handle(EditSchoolCommand request, CancellationToken cancellationToken)
         {
-            var school = await _context.Schools.FindAsync(request.Id);
+            var school = _context.Schools
+                .Where(x => x.EntityStatus != EntityStatus.Deleted)
+                .SingleOrDefault(x => x.Id == request.Id);
 
             if (school == null) return Result<Unit>.Failure(HttpStatus.NotFound, $"School with id: {request.Id} not found.");
-
-            //if(_context.Schools.Any(x => x.Id != request.Id && x.Name == request.Name)) 
-            //    return Result<Unit>.Failure(HttpStatus.BadRequest, $"School Name must be unique.");
-
-            //if (_context.Schools.Any(x => x.Id != request.Id && x.Name == request.Name))
-            //    return Result<Unit>.Failure(HttpStatus.BadRequest, $"School initial must be unique.");
-
-            //if (_context.Schools.Any(x => x.Id != request.Id && x.Name == request.Name))
-            //    return Result<Unit>.Failure(HttpStatus.BadRequest, $"School NTN. must be unique.");
 
             school.Name = request.Name;
             school.Initial = request.Initial;
             school.NTN = request.NTN;
+
+            var owner = await _userManager.GetUserById(school.OwnerId);
+
+            if (owner.Email != request.OwnerEmail)
+            {
+                owner.Email = request.OwnerEmail;
+                owner.UserName = request.OwnerEmail;
+
+                var identityResult = await _userManager.UpdateUser(owner);
+
+                if (!identityResult.Succeeded) return Result<Unit>.Failure(identityResult.Errors);
+            }
 
             var result = await _context.SaveChangesAsync(cancellationToken);
 

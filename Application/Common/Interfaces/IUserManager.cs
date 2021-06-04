@@ -14,5 +14,7 @@ namespace Application.Common.Interfaces
         Task<Result<UserAuthentication>> LoginUserAsync(string username, string password);
         string GetCurrentUserId();
         Task<AppUser> GetUserByName(string name);
+        Task<AppUser> GetUserById(string id);
+        Task<Result<string>> UpdateUser(AppUser user);
     }
 }
