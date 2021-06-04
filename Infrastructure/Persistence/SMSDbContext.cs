@@ -37,8 +37,9 @@ namespace Infrastructure.Persistence
         {
             foreach (EntityEntry<IAuditableEntity> entry in ChangeTracker.Entries<IAuditableEntity>())
             {
-                var currentUserId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-
+                var httpContext = new HttpContextAccessor().HttpContext;
+                string currentUserId = httpContext != null ? httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier) : "system";
+                
                 switch (entry.State)
                 {
                     case EntityState.Added:
