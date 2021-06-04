@@ -14,8 +14,10 @@ namespace Application.InstituteManagement.Schools.Queries.GetSchools
 
         public string Initial { get; set; }
 
-        public Guid OwnerId { get; set; }
+        public string OwnerId { get; set; }
 
         public string NTN { get; set; }
+
+        public int EntityStatus { get; set; }
     }
 }
