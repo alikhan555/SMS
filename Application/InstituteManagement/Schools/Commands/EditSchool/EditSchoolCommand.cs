@@ -14,12 +14,11 @@ namespace Application.InstituteManagement.Schools.Commands.EditSchool
     public class EditSchoolCommand : IRequest<Result<Unit>>
     {
         public int Id { get; set; }
-
         public string Name { get; set; }
-
         public string Initial { get; set; }
-
         public string NTN { get; set; }
+
+        public string OwnerEmail { get; set; }
     }
 
     public class EditSchoolCommandHandler : IRequestHandler<EditSchoolCommand, Result<Unit>>

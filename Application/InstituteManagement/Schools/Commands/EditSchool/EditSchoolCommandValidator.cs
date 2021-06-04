@@ -11,10 +11,12 @@ namespace Application.InstituteManagement.Schools.Commands.EditSchool
     public class EditSchoolCommandValidator : AbstractValidator<EditSchoolCommand>
     {
         ISMSDbContext _context;
+        IUserManager _userManager;
 
-        public EditSchoolCommandValidator(ISMSDbContext context)
+        public EditSchoolCommandValidator(ISMSDbContext context, IUserManager userManager)
         {
             _context = context;
+            _userManager = userManager;
 
             RuleFor(x => x.Id)
                 .NotNull()
@@ -34,6 +36,12 @@ namespace Application.InstituteManagement.Schools.Commands.EditSchool
                 .NotEmpty()
                 .Length(7, 7).WithMessage("NTN must be 7 character")
                 .Must(IsSchoolNTNUnique).WithMessage("School NTN. must be unique.");
+
+            RuleFor(x => x.OwnerEmail)
+                .NotEmpty()
+                .EmailAddress()
+                .Must(IsOwnerEmailUnique).WithMessage("Email address is already taken.");
+            _userManager = userManager;
         }
 
         public bool IsSchoolNameUnique(EditSchoolCommand model, string name)
@@ -49,6 +57,24 @@ namespace Application.InstituteManagement.Schools.Commands.EditSchool
         public bool IsSchoolNTNUnique(EditSchoolCommand model, string ntn)
         {
             return !_context.Schools.Any(x => x.Id != model.Id && x.NTN == ntn);
+        }
+
+        public bool IsOwnerEmailUnique(EditSchoolCommand model, string ownerEmail)
+        {
+            var user = _userManager.GetUserByName(ownerEmail).GetAwaiter().GetResult();
+
+            if (user == null)
+            {
+                return true;
+            }
+            else if (user.SchoolId == model.Id)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
