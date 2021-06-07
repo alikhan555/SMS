@@ -12,7 +12,7 @@ namespace Application.Common.Interfaces
     public interface ISMSDbContext
     {
         public DbSet<School> Schools { get; set; }
-        public DbSet<Campus> Campuses { get; set; }
+        public DbSet<Campus> Campus { get; set; }
         public DbSet<HeadOffice> HeadOffices { get; set; }
 
         

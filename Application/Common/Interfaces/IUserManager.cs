@@ -16,5 +16,7 @@ namespace Application.Common.Interfaces
         Task<AppUser> GetUserByName(string name);
         Task<AppUser> GetUserById(string id);
         Task<Result<string>> UpdateUser(AppUser user);
+        int GetCurrentCampusId();
+        int GetCurrentSchoolId();
     }
 }

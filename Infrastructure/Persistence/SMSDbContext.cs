@@ -26,7 +26,7 @@ namespace Infrastructure.Persistence
         }
 
         public DbSet<School> Schools { get; set; }
-        public DbSet<Campus> Campuses { get; set; }
+        public DbSet<Campus> Campus { get; set; }
         public DbSet<HeadOffice> HeadOffices { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

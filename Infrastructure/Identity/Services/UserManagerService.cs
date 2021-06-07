@@ -96,5 +96,17 @@ namespace Infrastructure.Identity.Services
             if (identityResult.Succeeded) return Result<string>.Success();
             else return Result<string>.Failure(identityResult.Errors.Select(x => x.Description));
         }
+
+        public int GetCurrentSchoolId()
+        {
+            var schoolId = _httpContextAccessor.HttpContext.User.FindFirst("SchoolId").Value;
+            return int.Parse(schoolId);
+        }
+
+        public int GetCurrentCampusId()
+        {
+            var campusId = _httpContextAccessor.HttpContext.User.FindFirst("CampusId").Value;
+            return int.Parse(campusId);
+        }
     }
 }
