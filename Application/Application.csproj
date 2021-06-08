@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="InstituteManagement\Campuses\Queries\" />
+    <Folder Include="InstituteManagement\Campuses\Queries\GetCampusDetails\" />
   </ItemGroup>
 
 </Project>

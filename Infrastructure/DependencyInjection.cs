@@ -32,6 +32,8 @@ namespace Infrastructure
             // Identity Configuration
             services.AddIdentityCore<AppUser>(options =>
             {
+                options.SignIn.RequireConfirmedEmail = false;
+
                 options.User.RequireUniqueEmail = false;
 
                 options.Password.RequireDigit = false;

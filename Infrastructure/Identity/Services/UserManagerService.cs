@@ -59,11 +59,14 @@ namespace Infrastructure.Identity.Services
 
                 if (result.Succeeded)
                 {
+                    var roles = await _userManager.GetRolesAsync(user);
+
                     var userAuthentication = new UserAuthentication()
                     {
                         Id = user.Id,
                         Username = username,
-                        JWToken = _tokenService.CreateToken(user, await _userManager.GetRolesAsync(user))
+                        Roles = roles,
+                        JWToken = _tokenService.CreateToken(user, roles)
                     };
 
                     return Result<UserAuthentication>.Success(userAuthentication);

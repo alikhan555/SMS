@@ -1,5 +1,7 @@
 ﻿using Application.Common.Enums;
 using Application.InstituteManagement.Campuses.Commands.CreateCampus;
+using Application.InstituteManagement.Campuses.Commands.EditCampus;
+using Application.InstituteManagement.Campuses.Queries.GetCampuses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,5 +21,41 @@ namespace SMS.API.Controllers.Institute
         {
             return ResultHandler(await Mediator.Send(model, cancellationToken));
         }
+
+        [HttpPut("{id}")]
+        [Authorize(Roles = Role.SchoolOwner)]
+        public async Task<IActionResult> Edit(int id, EditCampusCommand model, CancellationToken cancellationToken)
+        {
+            if (id != model.Id) return BadRequest();
+            return ResultHandler(await Mediator.Send(model, cancellationToken));
+        }
+
+        [HttpGet]
+        [Authorize(Roles = Role.SchoolOwner)]
+        public async Task<IActionResult> Get(CancellationToken cancellationToken)
+        {
+            return ResultHandler(await Mediator.Send(new GetCampusesQuery(), cancellationToken));
+        }
+
+        //[HttpGet("{id}")]
+        //[Authorize(Roles = Role.Developer)]
+        //public async Task<IActionResult> Get(int id, CancellationToken cancellationToken)
+        //{
+        //    return ResultHandler(await Mediator.Send(new GetSchoolDetailsQuery { Id = id }, cancellationToken));
+        //}
+
+        //[HttpPost]
+        //[Authorize(Roles = Role.Developer)]
+        //public async Task<ActionResult> Create(CreateSchoolCommand command, CancellationToken cancellationToken)
+        //{
+        //    return ResultHandler(await Mediator.Send(command, cancellationToken));
+        //}
+
+        //[HttpPut("Status")]
+        //[Authorize(Roles = Role.Developer)]
+        //public async Task<IActionResult> ChangeStatus(int id, string status, CancellationToken cancellationToken)
+        //{
+        //    return ResultHandler(await Mediator.Send(new ChangeSchoolStatusCommand { Id = id, status = status }, cancellationToken));
+        //}
     }
 }
