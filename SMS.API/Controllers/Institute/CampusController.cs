@@ -1,4 +1,5 @@
 ﻿using Application.Common.Enums;
+using Application.InstituteManagement.Campuses.Commands.ChangeCampusStatus;
 using Application.InstituteManagement.Campuses.Commands.CreateCampus;
 using Application.InstituteManagement.Campuses.Commands.EditCampus;
 using Application.InstituteManagement.Campuses.Queries.GetCampusDetails;
@@ -45,18 +46,11 @@ namespace SMS.API.Controllers.Institute
             return ResultHandler(await Mediator.Send(new GetCampusDetailsQuery{ Id = id }, cancellationToken));
         }
 
-        //[HttpPost]
-        //[Authorize(Roles = Role.Developer)]
-        //public async Task<ActionResult> Create(CreateSchoolCommand command, CancellationToken cancellationToken)
-        //{
-        //    return ResultHandler(await Mediator.Send(command, cancellationToken));
-        //}
-
-        //[HttpPut("Status")]
-        //[Authorize(Roles = Role.Developer)]
-        //public async Task<IActionResult> ChangeStatus(int id, string status, CancellationToken cancellationToken)
-        //{
-        //    return ResultHandler(await Mediator.Send(new ChangeSchoolStatusCommand { Id = id, status = status }, cancellationToken));
-        //}
+        [HttpPut("Status")]
+        [Authorize(Roles = Role.SchoolOwner)]
+        public async Task<IActionResult> ChangeStatus(int id, int status, CancellationToken cancellationToken)
+        {
+            return ResultHandler(await Mediator.Send(new ChangeCampusStatusCommand { Id = id, Status = status }, cancellationToken));
+        }
     }
 }
