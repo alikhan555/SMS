@@ -1,6 +1,7 @@
 ﻿using Application.Common.Enums;
 using Application.InstituteManagement.Campuses.Commands.CreateCampus;
 using Application.InstituteManagement.Campuses.Commands.EditCampus;
+using Application.InstituteManagement.Campuses.Queries.GetCampusDetails;
 using Application.InstituteManagement.Campuses.Queries.GetCampuses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -37,12 +38,12 @@ namespace SMS.API.Controllers.Institute
             return ResultHandler(await Mediator.Send(new GetCampusesQuery(), cancellationToken));
         }
 
-        //[HttpGet("{id}")]
-        //[Authorize(Roles = Role.Developer)]
-        //public async Task<IActionResult> Get(int id, CancellationToken cancellationToken)
-        //{
-        //    return ResultHandler(await Mediator.Send(new GetSchoolDetailsQuery { Id = id }, cancellationToken));
-        //}
+        [HttpGet("{id}")]
+        [Authorize(Roles = Role.SchoolOwner)]
+        public async Task<IActionResult> Get(int id, CancellationToken cancellationToken)
+        {
+            return ResultHandler(await Mediator.Send(new GetCampusDetailsQuery{ Id = id }, cancellationToken));
+        }
 
         //[HttpPost]
         //[Authorize(Roles = Role.Developer)]
