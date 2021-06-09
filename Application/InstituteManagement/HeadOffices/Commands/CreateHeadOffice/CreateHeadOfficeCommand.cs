@@ -17,6 +17,9 @@ namespace Application.InstituteManagement.HeadOffices.Commands.CreateHeadOffice
         public bool IsAtCampus { get; set; }
         public int? CampusId { get; set; }
         public string Address { get; set; }
+        public string Contact1 { get; set; }
+        public string Contact2 { get; set; }
+        public string Contact3 { get; set; }
     }
 
     public class CreateHeadOfficeCommandHandler : IRequestHandler<CreateHeadOfficeCommand, Result<int>>
@@ -35,6 +38,9 @@ namespace Application.InstituteManagement.HeadOffices.Commands.CreateHeadOffice
             var headOffice = new HeadOffice()
             {
                 Address = request.Address,
+                Contact1 = request.Contact1,
+                Contact2 = request.Contact2,
+                Contact3 = request.Contact3,
                 IsAtCampus = request.IsAtCampus,
                 CampusId = request.IsAtCampus ? request.CampusId : null,
                 SchoolId = _userManager.GetCurrentSchoolId()

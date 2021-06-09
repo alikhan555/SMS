@@ -15,6 +15,9 @@ namespace Domain.Entities.Institute
         public bool IsAtCampus { get; set; }
         public int? CampusId { get; set; }
         public string Address { get; set; }
+        public string Contact1 { get; set; }
+        public string Contact2 { get; set; }
+        public string Contact3 { get; set; }
 
         public School School { get; set; }
         public Campus Campus { get; set; }

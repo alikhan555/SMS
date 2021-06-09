@@ -14,6 +14,9 @@ namespace Infrastructure.Persistence.Configuration.Institute
         public void Configure(EntityTypeBuilder<HeadOffice> builder)
         {
             builder.Property(x => x.Address).IsRequired();
+            builder.Property(x => x.Contact1).HasMaxLength(15);
+            builder.Property(x => x.Contact2).HasMaxLength(15);
+            builder.Property(x => x.Contact3).HasMaxLength(15);
         }
     }
 }

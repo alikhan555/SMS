@@ -22,6 +22,15 @@ namespace Application.InstituteManagement.HeadOffices.Commands.CreateHeadOffice
             RuleFor(x => x.Address)
                 .NotEmpty();
 
+            RuleFor(x => x.Contact1)
+                .MaximumLength(15);
+
+            RuleFor(x => x.Contact2)
+                .MaximumLength(15);
+
+            RuleFor(x => x.Contact3)
+                .MaximumLength(15);
+
             RuleFor(x => x.CampusId)
                 .NotEmpty()
                 .Must(IsCampusIdValid).WithMessage("Campus Id is not valid.")
