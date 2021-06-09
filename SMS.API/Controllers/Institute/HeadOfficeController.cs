@@ -1,11 +1,8 @@
 ﻿using Application.Common.Enums;
 using Application.InstituteManagement.HeadOffices.Commands.CreateHeadOffice;
+using Application.InstituteManagement.HeadOffices.Commands.EditHeadOffice;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,13 +17,13 @@ namespace SMS.API.Controllers.Institute
             return ResultHandler(await Mediator.Send(model, cancellationToken));
         }
 
-        //[HttpPut("{id}")]
-        //[Authorize(Roles = Role.SchoolOwner)]
-        //public async Task<IActionResult> Edit(int id, EditCampusCommand model, CancellationToken cancellationToken)
-        //{
-        //    if (id != model.Id) return BadRequest();
-        //    return ResultHandler(await Mediator.Send(model, cancellationToken));
-        //}
+        [HttpPut("{id}")]
+        [Authorize(Roles = Role.SchoolOwner)]
+        public async Task<IActionResult> Edit(int id, EditHeadOfficeCommand model, CancellationToken cancellationToken)
+        {
+            if (id != model.Id) return BadRequest();
+            return ResultHandler(await Mediator.Send(model, cancellationToken));
+        }
 
         //[HttpGet]
         //[Authorize(Roles = Role.SchoolOwner)]
