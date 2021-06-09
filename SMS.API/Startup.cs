@@ -40,7 +40,7 @@ namespace SMS.API
             {
                 options.AddPolicy("CorsPolicy", policy =>
                 {
-                    policy.AllowAnyMethod().AllowAnyHeader().SetIsOriginAllowed(origion => true);
+                    policy.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
                 });
             });
         }
