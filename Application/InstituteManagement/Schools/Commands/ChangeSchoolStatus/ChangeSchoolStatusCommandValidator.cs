@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Application.Common.Enums;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,7 @@ namespace Application.InstituteManagement.Schools.Commands.ChangeSchoolStatus
         {
             RuleFor(x => x.status)
                 .NotEmpty()
-                .Must(x => x == "Active" || x == "InActive" || x == "Deleted").WithMessage("Invalid status value.");
+                .Must(x => x == EntityStatus.Active || x == EntityStatus.InActive || x == EntityStatus.Deleted).WithMessage("Invalid status value.");
         }
-
-        //public bool IsValidStatus(string status)
-        //{
-
-        //}
     }
 }

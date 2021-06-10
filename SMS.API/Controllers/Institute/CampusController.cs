@@ -19,17 +19,17 @@ namespace SMS.API.Controllers.Institute
     {
         [HttpPost]
         [Authorize(Roles = Role.SchoolOwner)]
-        public async Task<IActionResult> Create(CreateCampusCommand model, CancellationToken cancellationToken)
+        public async Task<IActionResult> Create(CreateCampusCommand command, CancellationToken cancellationToken)
         {
-            return ResultHandler(await Mediator.Send(model, cancellationToken));
+            return ResultHandler(await Mediator.Send(command, cancellationToken));
         }
 
         [HttpPut("{id}")]
         [Authorize(Roles = Role.SchoolOwner)]
-        public async Task<IActionResult> Edit(int id, EditCampusCommand model, CancellationToken cancellationToken)
+        public async Task<IActionResult> Edit(int id, EditCampusCommand command, CancellationToken cancellationToken)
         {
-            if (id != model.Id) return BadRequest();
-            return ResultHandler(await Mediator.Send(model, cancellationToken));
+            if (id != command.Id) return BadRequest();
+            return ResultHandler(await Mediator.Send(command, cancellationToken));
         }
 
         [HttpGet]
@@ -48,9 +48,9 @@ namespace SMS.API.Controllers.Institute
 
         [HttpPut("Status")]
         [Authorize(Roles = Role.SchoolOwner)]
-        public async Task<IActionResult> ChangeStatus(int id, int status, CancellationToken cancellationToken)
+        public async Task<IActionResult> ChangeStatus([FromQuery] ChangeCampusStatusCommand command, CancellationToken cancellationToken)
         {
-            return ResultHandler(await Mediator.Send(new ChangeCampusStatusCommand { Id = id, Status = status }, cancellationToken));
+            return ResultHandler(await Mediator.Send(command, cancellationToken));
         }
     }
 }

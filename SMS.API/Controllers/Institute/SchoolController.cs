@@ -44,9 +44,9 @@ namespace SMS.API.Controllers.Institute
 
         [HttpPut("Status")]
         [Authorize(Roles = Role.Developer)]
-        public async Task<IActionResult> ChangeStatus(int id, string status, CancellationToken cancellationToken)
+        public async Task<IActionResult> ChangeStatus([FromQuery]ChangeSchoolStatusCommand command, CancellationToken cancellationToken)
         {
-            return ResultHandler(await Mediator.Send(new ChangeSchoolStatusCommand { Id = id, status = status }, cancellationToken));
+            return ResultHandler(await Mediator.Send(command, cancellationToken));
         }
     }
 }

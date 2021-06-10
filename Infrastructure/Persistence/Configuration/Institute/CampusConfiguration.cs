@@ -14,7 +14,6 @@ namespace Infrastructure.Persistence.Configuration.Institute
         public void Configure(EntityTypeBuilder<Campus> builder)
         {
             builder.Property(x => x.Name).IsRequired().HasMaxLength(50);
-
             builder.Property(x => x.Address).IsRequired();
         }
     }

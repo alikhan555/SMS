@@ -14,7 +14,7 @@ namespace Application.InstituteManagement.Schools.Commands.ChangeSchoolStatus
     public class ChangeSchoolStatusCommand : IRequest<Result<Unit>>
     {
         public int Id { get; set; }
-        public string status { get; set; }
+        public int status { get; set; }
     }
 
     class ChangeSchoolStatusCommandHandler : IRequestHandler<ChangeSchoolStatusCommand, Result<Unit>>
@@ -36,38 +36,13 @@ namespace Application.InstituteManagement.Schools.Commands.ChangeSchoolStatus
             var owner = await _UserManager.GetUserById(school.OwnerId);
             if (owner == null) return Result<Unit>.Failure(HttpStatus.NotFound, $"School owner not found.");
 
-            switch (request.status)
-            {
-                case "Active":
-                    {
-                        school.EntityStatus = EntityStatus.Active;
-                        owner.EntityStatus = EntityStatus.Active;
-                        break;
-                    }
-                case "InActive":
-                    {
-                        school.EntityStatus = EntityStatus.InActive;
-                        owner.EntityStatus = EntityStatus.InActive; 
-                        break;
-                    }
-                case "Delete":
-                    {
-                        school.EntityStatus = EntityStatus.Deleted;
-                        owner.EntityStatus = EntityStatus.Deleted;
-                        break;
-                    }
-                default:
-                    {
-                        return Result<Unit>.Failure(HttpStatus.BadRequest, $"Invalid status value.");
-                    }
-            }
+            school.EntityStatus = request.status;
+            owner.EntityStatus = request.status;
 
             // this will also update School Entity
             var identityResult = await _UserManager.UpdateUser(owner);
-            //var entityResult = await _context.SaveChangesAsync(cancellationToken);
 
             if (!identityResult.Succeeded) return Result<Unit>.Failure(HttpStatus.BadRequest, $"Failed to chnage status.");
-            //if (entityResult <= 0) return Result<Unit>.Failure(HttpStatus.BadRequest, $"Failed to chnage school status.");
 
             return Result<Unit>.Success(Unit.Value);
         }
