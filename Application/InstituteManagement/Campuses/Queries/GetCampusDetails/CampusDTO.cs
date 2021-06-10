@@ -12,5 +12,8 @@ namespace Application.InstituteManagement.Campuses.Queries.GetCampusDetails
         public string Name { get; set; }
         public string Address { get; set; }
         public int EntityStatus { get; set; }
+        public string Contact1 { get; set; }
+        public string Contact2 { get; set; }
+        public string Contact3 { get; set; }
     }
 }

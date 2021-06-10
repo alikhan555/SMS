@@ -35,6 +35,9 @@ namespace Application.InstituteManagement.Campuses.Queries.GetCampuses
                     Id = x.Id,
                     Name = x.Name,
                     Address = x.Address,
+                    Contact1 = x.Contact1,
+                    Contact2 = x.Contact2,
+                    Contact3 = x.Contact3,
                     EntityStatus = x.EntityStatus
                 })
                 .ToListAsync(cancellationToken);

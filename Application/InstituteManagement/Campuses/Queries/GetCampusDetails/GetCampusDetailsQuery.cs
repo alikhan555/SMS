@@ -39,6 +39,9 @@ namespace Application.InstituteManagement.Campuses.Queries.GetCampusDetails
                 Id = campusDetails.Id,
                 Name = campusDetails.Name,
                 Address = campusDetails.Address,
+                Contact1 = campusDetails.Contact1,
+                Contact2 = campusDetails.Contact2,
+                Contact3 = campusDetails.Contact3,
                 EntityStatus = campusDetails.EntityStatus
             };
 
