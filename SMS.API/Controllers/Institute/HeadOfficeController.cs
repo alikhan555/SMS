@@ -1,4 +1,5 @@
 ﻿using Application.Common.Enums;
+using Application.InstituteManagement.HeadOffices.Commands.ChangeHeadOfficeStatus;
 using Application.InstituteManagement.HeadOffices.Commands.CreateHeadOffice;
 using Application.InstituteManagement.HeadOffices.Commands.EditHeadOffice;
 using Application.InstituteManagement.HeadOffices.Queries.GetHeadOffice;
@@ -41,11 +42,11 @@ namespace SMS.API.Controllers.Institute
             return ResultHandler(await Mediator.Send(new GetHeadOfficeDetailsQuery { Id = id }, cancellationToken));
         }
 
-        //[HttpPut("Status")]
-        //[Authorize(Roles = Role.SchoolOwner)]
-        //public async Task<IActionResult> ChangeStatus(int id, int status, CancellationToken cancellationToken)
-        //{
-        //    return ResultHandler(await Mediator.Send(new ChangeCampusStatusCommand { Id = id, Status = status }, cancellationToken));
-        //}
+        [HttpPut("Status")]
+        [Authorize(Roles = Role.SchoolOwner)]
+        public async Task<IActionResult> ChangeStatus([FromQuery] ChangeHeadOfficeStatusCommand model, CancellationToken cancellationToken)
+        {
+            return ResultHandler(await Mediator.Send(model, cancellationToken));
+        }
     }
 }
