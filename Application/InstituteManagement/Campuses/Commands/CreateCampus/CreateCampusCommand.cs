@@ -16,6 +16,9 @@ namespace Application.InstituteManagement.Campuses.Commands.CreateCampus
     {
         public string Name { get; set; }
         public string Address { get; set; }
+        public string Contact1 { get; set; }
+        public string Contact2 { get; set; }
+        public string Contact3 { get; set; }
     }
 
     public class CreateCampusCommandHandler : IRequestHandler<CreateCampusCommand, Result<int>>
@@ -37,6 +40,9 @@ namespace Application.InstituteManagement.Campuses.Commands.CreateCampus
             {
                 Name = request.Name,
                 Address = request.Address,
+                Contact1 = request.Contact1,
+                Contact2 = request.Contact2,
+                Contact3 = request.Contact3,
                 SchoolId = _userMannager.GetCurrentSchoolId(),
             };
 

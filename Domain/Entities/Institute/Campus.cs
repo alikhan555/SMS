@@ -14,6 +14,9 @@ namespace Domain.Entities.Institute
         public int SchoolId { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
+        public string Contact1 { get; set; }
+        public string Contact2 { get; set; }
+        public string Contact3 { get; set; }
 
         public School School { get; set; }
     }

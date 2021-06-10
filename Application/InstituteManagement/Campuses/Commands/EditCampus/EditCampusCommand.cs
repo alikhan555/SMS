@@ -16,6 +16,9 @@ namespace Application.InstituteManagement.Campuses.Commands.EditCampus
         public int Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
+        public string Contact1 { get; set; }
+        public string Contact2 { get; set; }
+        public string Contact3 { get; set; }
     }
 
     public class EditCampusCommandHandler : IRequestHandler<EditCampusCommand, Result<Unit>>
@@ -37,6 +40,9 @@ namespace Application.InstituteManagement.Campuses.Commands.EditCampus
 
             campus.Name = request.Name;
             campus.Address = request.Address;
+            campus.Contact1 = request.Contact1;
+            campus.Contact2 = request.Contact2;
+            campus.Contact3 = request.Contact3;
 
             var entityResult = await _dbContext.SaveChangesAsync(cancellationToken);
 
