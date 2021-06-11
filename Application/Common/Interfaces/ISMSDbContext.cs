@@ -15,6 +15,7 @@ namespace Application.Common.Interfaces
         public DbSet<Campus> Campus { get; set; }
         public DbSet<HeadOffice> HeadOffice { get; set; }
         public DbSet<DepartmentName> DepartmentName { get; set; }
+        public DbSet<Department> Department { get; set; }
 
         
         

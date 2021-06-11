@@ -4,14 +4,16 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(SMSDbContext))]
-    partial class SMSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210611052154_AddDepartmentRelationWithDepartmentNameWithRelations")]
+    partial class AddDepartmentRelationWithDepartmentNameWithRelations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,23 +84,8 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<int>("CampusId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("DepartmentNameId")
                         .HasColumnType("int");
-
-                    b.Property<int>("EntityStatus")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("LastModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SchoolId")
                         .HasColumnType("int");
