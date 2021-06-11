@@ -1,6 +1,8 @@
 ﻿using Application.Common.Enums;
 using Application.InstituteManagement.Departments.Commands.CreateDepartment;
 using Application.InstituteManagement.Departments.Commands.EditDepartment;
+using Application.InstituteManagement.Departments.Queries.GetDepartment;
+using Application.InstituteManagement.Departments.Queries.GetDepartmentDetails;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,19 +16,19 @@ namespace SMS.API.Controllers.Institute
 {
     public class DepartmentController : BaseApiController
     {
-        //[HttpGet]
-        //[Authorize(Roles = Role.SchoolOwner)]
-        //public async Task<IActionResult> Get(CancellationToken cancellationToken)
-        //{
-        //    return ResultHandler(await Mediator.Send(new GetDepartmentNamesQuery(), cancellationToken));
-        //}
+        [HttpGet]
+        [Authorize(Roles = Role.SchoolOwner)]
+        public async Task<IActionResult> Get(CancellationToken cancellationToken)
+        {
+            return ResultHandler(await Mediator.Send(new GetDepartmentsQuery(), cancellationToken));
+        }
 
-        //[HttpGet("{id}")]
-        //[Authorize(Roles = Role.SchoolOwner)]
-        //public async Task<IActionResult> Get(int id, CancellationToken cancellationToken)
-        //{
-        //    return ResultHandler(await Mediator.Send(new GetDepartmentNameDetailsQuery { Id = id }, cancellationToken));
-        //}
+        [HttpGet("{id}")]
+        [Authorize(Roles = Role.SchoolOwner)]
+        public async Task<IActionResult> Get(int id, CancellationToken cancellationToken)
+        {
+            return ResultHandler(await Mediator.Send(new GetDepartmentDetailsQuery { Id = id }, cancellationToken));
+        }
 
         [HttpPost]
         [Authorize(Roles = Role.SchoolOwner)]
