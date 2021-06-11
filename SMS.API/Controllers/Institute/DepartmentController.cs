@@ -1,4 +1,5 @@
 ﻿using Application.Common.Enums;
+using Application.InstituteManagement.Departments.Commands.ChangeDepartmentStatus;
 using Application.InstituteManagement.Departments.Commands.CreateDepartment;
 using Application.InstituteManagement.Departments.Commands.EditDepartment;
 using Application.InstituteManagement.Departments.Queries.GetDepartment;
@@ -45,11 +46,11 @@ namespace SMS.API.Controllers.Institute
             return ResultHandler(await Mediator.Send(command, cancellationToken));
         }
 
-        //[HttpPut("Status")]
-        //[Authorize(Roles = Role.SchoolOwner)]
-        //public async Task<IActionResult> ChangeStatus([FromQuery] ChangeDepartmentNameStatusCommand command, CancellationToken cancellationToken)
-        //{
-        //    return ResultHandler(await Mediator.Send(command, cancellationToken));
-        //}
+        [HttpPut("Status")]
+        [Authorize(Roles = Role.SchoolOwner)]
+        public async Task<IActionResult> ChangeStatus([FromQuery] ChangeDepartmentStatusCommand command, CancellationToken cancellationToken)
+        {
+            return ResultHandler(await Mediator.Send(command, cancellationToken));
+        }
     }
 }
