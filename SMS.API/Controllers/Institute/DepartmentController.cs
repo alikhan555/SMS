@@ -1,5 +1,6 @@
 ﻿using Application.Common.Enums;
 using Application.InstituteManagement.Departments.Commands.CreateDepartment;
+using Application.InstituteManagement.Departments.Commands.EditDepartment;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -34,13 +35,13 @@ namespace SMS.API.Controllers.Institute
             return ResultHandler(await Mediator.Send(command, cancellationToken));
         }
 
-        //[HttpPut("{id}")]
-        //[Authorize(Roles = Role.SchoolOwner)]
-        //public async Task<IActionResult> Edit(int id, EditDepartmentNameCommand command, CancellationToken cancellationToken)
-        //{
-        //    if (id != command.Id) return BadRequest();
-        //    return ResultHandler(await Mediator.Send(command, cancellationToken));
-        //}
+        [HttpPut("{id}")]
+        [Authorize(Roles = Role.SchoolOwner)]
+        public async Task<IActionResult> Edit(int id, EditDepartmentCommand command, CancellationToken cancellationToken)
+        {
+            if (id != command.Id) return BadRequest();
+            return ResultHandler(await Mediator.Send(command, cancellationToken));
+        }
 
         //[HttpPut("Status")]
         //[Authorize(Roles = Role.SchoolOwner)]
