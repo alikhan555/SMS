@@ -17,7 +17,6 @@ namespace Application.InstituteManagement.DepartmentNames.Commands.EditDepartmen
         public int Id { get; set; }
         public string Name { get; set; }
         public string Initial { get; set; }
-        public int CampusId { get; set; }
     }
 
     public class EditDepartmentNameCommandHandler : IRequestHandler<EditDepartmentNameCommand, Result<Unit>>
@@ -43,7 +42,6 @@ namespace Application.InstituteManagement.DepartmentNames.Commands.EditDepartmen
 
             departmentName.Name = request.Name;
             departmentName.Initial = request.Initial;
-            departmentName.CampusId = request.CampusId;
 
             var entityStatus = await _dbContext.SaveChangesAsync(cancellationToken);
 

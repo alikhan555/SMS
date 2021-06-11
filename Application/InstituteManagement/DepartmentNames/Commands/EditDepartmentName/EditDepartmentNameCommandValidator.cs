@@ -26,14 +26,6 @@ namespace Application.InstituteManagement.DepartmentNames.Commands.EditDepartmen
             RuleFor(x => x.Initial)
                 .NotEmpty()
                 .MaximumLength(10);
-
-            RuleFor(x => x.CampusId)
-                .Must(IsCampusIdValid).WithMessage("Campus Id is not valid.");
-        }
-
-        public bool IsCampusIdValid(int campusId)
-        {
-            return _dbContext.Campus.Any(x => x.SchoolId == _userManager.GetCurrentSchoolId() && x.EntityStatus == EntityStatus.Active && x.Id == campusId);
         }
     }
 }

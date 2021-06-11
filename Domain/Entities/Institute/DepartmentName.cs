@@ -13,6 +13,5 @@ namespace Domain.Entities.Institute
         public string Name { get; set; }
         public string Initial { get; set; }
         public int SchoolId { get; set; }
-        public int CampusId { get; set; }
     }
 }

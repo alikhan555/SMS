@@ -16,7 +16,6 @@ namespace Application.InstituteManagement.DepartmentNames.Commands.CreateDepartm
     {
         public string Name { get; set; }
         public string Initial { get; set; }
-        public int CampusId { get; set; }
     }
 
     class CreateDepartmentNameCommandHandler : IRequestHandler<CreateDepartmentNameCommand, Result<int>>
@@ -36,7 +35,6 @@ namespace Application.InstituteManagement.DepartmentNames.Commands.CreateDepartm
             {
                 Name = request.Name,
                 Initial = request.Initial,
-                CampusId = request.CampusId,
                 SchoolId = _userManager.GetCurrentSchoolId()
             };
 
