@@ -1,6 +1,7 @@
 ﻿using Application.Common.Enums;
 using Application.InstituteManagement.DepartmentNames.Commands.CreateDepartmentName;
 using Application.InstituteManagement.DepartmentNames.Commands.EditDepartmentName;
+using Application.InstituteManagement.DepartmentNames.Queries.GetDepartmentNames;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,12 +15,12 @@ namespace SMS.API.Controllers.Institute
 {
     public class DepartmentNameController : BaseApiController
     {
-        //[HttpGet]
-        //[Authorize(Roles = Role.SchoolOwner)]
-        //public async Task<IActionResult> Get(CancellationToken cancellationToken)
-        //{
-        //    return ResultHandler(await Mediator.Send(new GetSchoolsQuery(), cancellationToken));
-        //}
+        [HttpGet]
+        [Authorize(Roles = Role.SchoolOwner)]
+        public async Task<IActionResult> Get(CancellationToken cancellationToken)
+        {
+            return ResultHandler(await Mediator.Send(new GetDepartmentNamesQuery(), cancellationToken));
+        }
 
         //[HttpGet("{id}")]
         //[Authorize(Roles = Role.Developer)]
