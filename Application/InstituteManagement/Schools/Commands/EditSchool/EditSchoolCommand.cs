@@ -34,6 +34,7 @@ namespace Application.InstituteManagement.Schools.Commands.EditSchool
 
         public async Task<Result<Unit>> Handle(EditSchoolCommand request, CancellationToken cancellationToken)
         {
+            // Update only Schools Feilds here
             var school = _context.Schools
                 .Where(x => x.EntityStatus != EntityStatus.Deleted)
                 .SingleOrDefault(x => x.Id == request.Id);
@@ -44,21 +45,15 @@ namespace Application.InstituteManagement.Schools.Commands.EditSchool
             school.Initial = request.Initial;
             school.NTN = request.NTN;
 
+            await _context.SaveChangesAsync(cancellationToken);
+
+            // Update School Owner Here
             var owner = await _userManager.GetUserById(school.OwnerId);
+            owner.Email = request.OwnerEmail;
+            owner.UserName = request.OwnerEmail;
 
-            if (owner.Email != request.OwnerEmail)
-            {
-                owner.Email = request.OwnerEmail;
-                owner.UserName = request.OwnerEmail;
-
-                var identityResult = await _userManager.UpdateUser(owner);
-
-                if (!identityResult.Succeeded) return Result<Unit>.Failure(identityResult.Errors);
-            }
-
-            var result = await _context.SaveChangesAsync(cancellationToken);
-
-            if (result <= 0) return Result<Unit>.Failure(HttpStatus.BadRequest, $"Failed to update the school.");
+            var identityResult = await _userManager.UpdateUser(owner);
+            if (!identityResult.Succeeded) return Result<Unit>.Failure(identityResult.Errors);
 
             return Result<Unit>.Success(Unit.Value);
         }
