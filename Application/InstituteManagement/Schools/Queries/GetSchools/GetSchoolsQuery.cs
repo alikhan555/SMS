@@ -29,6 +29,7 @@ namespace Application.InstituteManagement.Schools.Queries.GetSchools
         {
             var schools = await _context.Schools
                 .Where(x => x.EntityStatus != Common.Enums.EntityStatus.Deleted)
+                .Include(x => x.Owner)
                 .Select(x => new SchoolDto
                 {
                     Id = x.Id,
@@ -36,6 +37,7 @@ namespace Application.InstituteManagement.Schools.Queries.GetSchools
                     Initial = x.Initial,
                     NTN = x.NTN,
                     OwnerId = x.OwnerId,
+                    OwnerEmail = x.Owner.Email.ToLower(),
                     EntityStatus = x.EntityStatus
                 }).ToListAsync();
 

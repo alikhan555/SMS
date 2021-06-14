@@ -2,6 +2,7 @@
 using Application.Common.Interfaces;
 using Application.Common.Models;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,6 +29,7 @@ namespace Application.InstituteManagement.Schools.Queries.GetSchoolDetails
         {
             var school = _context.Schools
                 .Where(x => x.EntityStatus != EntityStatus.Deleted)
+                .Include(x => x.Owner)
                 .SingleOrDefault(x => x.Id == request.Id);
 
             if (school == null) return Result<SchoolDetailsDto>.Failure(HttpStatus.NotFound, $"School with id: {request.Id} not found.");
@@ -38,6 +40,7 @@ namespace Application.InstituteManagement.Schools.Queries.GetSchoolDetails
                 Name = school.Name,
                 Initial = school.Initial,
                 OwnerId = school.OwnerId,
+                OwnerEmail = school.Owner.Email.ToLower(),
                 NTN = school.NTN,
                 EntityStatus = school.EntityStatus
             };
