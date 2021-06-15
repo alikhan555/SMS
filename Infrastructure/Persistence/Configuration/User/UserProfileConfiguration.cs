@@ -13,7 +13,7 @@ namespace Infrastructure.Persistence.Configuration.User
     {
         public void Configure(EntityTypeBuilder<UserProfile> builder)
         {
-            builder.HasForeignKey
+            //builder.HasOne<AppUser>(x => x.AppUser).WithOne(x => x.UserProfile).HasForeignKey<AppUser>(x => x.).HasForeignKey<>
 
 
 

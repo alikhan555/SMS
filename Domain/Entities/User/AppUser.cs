@@ -18,5 +18,9 @@ namespace Domain.Entities.User
         public DateTime? LastModified { get; set; }
         public string LastModifiedBy { get; set; }
         public int EntityStatus { get; set; }
+
+
+
+        public UserProfile UserProfile { get; set; }
     }
 }
