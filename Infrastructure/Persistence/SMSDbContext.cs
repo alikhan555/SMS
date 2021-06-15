@@ -25,11 +25,15 @@ namespace Infrastructure.Persistence
             _httpContextAccessor = httpContextAccessor;
         }
 
+        // Institute Info
         public DbSet<School> Schools { get; set; }
         public DbSet<Campus> Campus { get; set; }
         public DbSet<HeadOffice> HeadOffice { get; set; }
         public DbSet<DepartmentName> DepartmentName { get; set; }
         public DbSet<Department> Department { get; set; }
+        
+        // User Info
+        public DbSet<Cohort> Cohort { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
