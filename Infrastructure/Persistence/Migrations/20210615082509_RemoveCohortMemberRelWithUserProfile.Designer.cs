@@ -4,14 +4,16 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(SMSDbContext))]
-    partial class SMSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210615082509_RemoveCohortMemberRelWithUserProfile")]
+    partial class RemoveCohortMemberRelWithUserProfile
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -439,14 +441,12 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MemberId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("MemberId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CohortId");
-
-                    b.HasIndex("MemberId");
 
                     b.ToTable("CohortMember");
                 });
@@ -739,13 +739,7 @@ namespace Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.User.UserProfile", "Member")
-                        .WithMany("CohortMembers")
-                        .HasForeignKey("MemberId");
-
                     b.Navigation("Cohort");
-
-                    b.Navigation("Member");
                 });
 
             modelBuilder.Entity("Domain.Entities.User.UserProfile", b =>
@@ -809,11 +803,6 @@ namespace Infrastructure.Persistence.Migrations
                 });
 
             modelBuilder.Entity("Domain.Entities.User.Cohort", b =>
-                {
-                    b.Navigation("CohortMembers");
-                });
-
-            modelBuilder.Entity("Domain.Entities.User.UserProfile", b =>
                 {
                     b.Navigation("CohortMembers");
                 });

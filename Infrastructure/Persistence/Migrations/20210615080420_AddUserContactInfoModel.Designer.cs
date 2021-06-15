@@ -4,14 +4,16 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(SMSDbContext))]
-    partial class SMSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210615080420_AddUserContactInfoModel")]
+    partial class AddUserContactInfoModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -414,43 +416,6 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("Cohort");
                 });
 
-            modelBuilder.Entity("Domain.Entities.User.CohortMember", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CohortId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("EntityStatus")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("LastModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MemberId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CohortId");
-
-                    b.HasIndex("MemberId");
-
-                    b.ToTable("CohortMember");
-                });
-
             modelBuilder.Entity("Domain.Entities.User.UserContactInfo", b =>
                 {
                     b.Property<string>("Id")
@@ -513,6 +478,9 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<string>("Cnic")
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
+
+                    b.Property<int>("CohortId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -731,23 +699,6 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("Owner");
                 });
 
-            modelBuilder.Entity("Domain.Entities.User.CohortMember", b =>
-                {
-                    b.HasOne("Domain.Entities.User.Cohort", "Cohort")
-                        .WithMany("CohortMembers")
-                        .HasForeignKey("CohortId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.User.UserProfile", "Member")
-                        .WithMany("CohortMembers")
-                        .HasForeignKey("MemberId");
-
-                    b.Navigation("Cohort");
-
-                    b.Navigation("Member");
-                });
-
             modelBuilder.Entity("Domain.Entities.User.UserProfile", b =>
                 {
                     b.HasOne("Domain.Entities.User.AppUser", "AppUser")
@@ -806,16 +757,6 @@ namespace Infrastructure.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Domain.Entities.User.Cohort", b =>
-                {
-                    b.Navigation("CohortMembers");
-                });
-
-            modelBuilder.Entity("Domain.Entities.User.UserProfile", b =>
-                {
-                    b.Navigation("CohortMembers");
                 });
 #pragma warning restore 612, 618
         }

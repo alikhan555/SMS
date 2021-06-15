@@ -34,6 +34,7 @@ namespace Infrastructure.Persistence
         
         // User Info
         public DbSet<Cohort> Cohort { get; set; }
+        public DbSet<CohortMember> CohortMember { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

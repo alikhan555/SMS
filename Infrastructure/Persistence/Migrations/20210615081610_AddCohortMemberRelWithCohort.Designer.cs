@@ -4,14 +4,16 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(SMSDbContext))]
-    partial class SMSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210615081610_AddCohortMemberRelWithCohort")]
+    partial class AddCohortMemberRelWithCohort
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -439,14 +441,12 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MemberId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("MemberId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CohortId");
-
-                    b.HasIndex("MemberId");
 
                     b.ToTable("CohortMember");
                 });
@@ -513,6 +513,9 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<string>("Cnic")
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
+
+                    b.Property<int>("CohortId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -739,13 +742,7 @@ namespace Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.User.UserProfile", "Member")
-                        .WithMany("CohortMembers")
-                        .HasForeignKey("MemberId");
-
                     b.Navigation("Cohort");
-
-                    b.Navigation("Member");
                 });
 
             modelBuilder.Entity("Domain.Entities.User.UserProfile", b =>
@@ -809,11 +806,6 @@ namespace Infrastructure.Persistence.Migrations
                 });
 
             modelBuilder.Entity("Domain.Entities.User.Cohort", b =>
-                {
-                    b.Navigation("CohortMembers");
-                });
-
-            modelBuilder.Entity("Domain.Entities.User.UserProfile", b =>
                 {
                     b.Navigation("CohortMembers");
                 });
