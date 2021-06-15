@@ -18,6 +18,11 @@ namespace Infrastructure.Persistence.Configuration.User
             builder.Property(x => x.HomeLandline).HasMaxLength(20);
             builder.Property(x => x.Email).HasMaxLength(20);
             builder.Property(x => x.GuardianEmail).HasMaxLength(20);
+
+            builder
+                .HasOne(x => x.UserProfile)
+                .WithOne(x => x.UserContactInfo)
+                .HasForeignKey<UserContactInfo>(x => x.Id);
         }
     }
 }

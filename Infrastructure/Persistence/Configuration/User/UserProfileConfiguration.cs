@@ -13,10 +13,6 @@ namespace Infrastructure.Persistence.Configuration.User
     {
         public void Configure(EntityTypeBuilder<UserProfile> builder)
         {
-            //builder.HasOne<AppUser>(x => x.AppUser).WithOne(x => x.UserProfile).HasForeignKey<AppUser>(x => x.).HasForeignKey<>
-
-
-
             builder.Property(x => x.FirstName).IsRequired().HasMaxLength(50);
             builder.Property(x => x.LastModified).IsRequired().HasMaxLength(50);
             builder.Property(x => x.GuardianName).HasMaxLength(50);
@@ -25,6 +21,8 @@ namespace Infrastructure.Persistence.Configuration.User
             builder.Property(x => x.DateOfBirth).HasColumnType("Date");
             builder.Property(x => x.Cnic).HasMaxLength(15);
             builder.Property(x => x.Qualification).HasMaxLength(50);
+
+
         }
     }
 }

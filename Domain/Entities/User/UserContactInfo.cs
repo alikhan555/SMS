@@ -15,5 +15,9 @@ namespace Domain.Entities.User
         public string HomeLandline { get; set; }
         public string Email { get; set; }
         public string GuardianEmail { get; set; }
+
+
+
+        public UserProfile UserProfile { get; set; }
     }
 }

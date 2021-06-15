@@ -27,6 +27,7 @@ namespace Domain.Entities.User
 
 
         public AppUser AppUser { get; set; }
+        public UserContactInfo UserContactInfo { get; set; }
         public ICollection<CohortMember> CohortMembers { get; }
     }
 }
