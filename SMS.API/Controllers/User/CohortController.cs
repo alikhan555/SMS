@@ -1,6 +1,8 @@
 ﻿using Application.Common.Enums;
 using Application.InstituteManagement.Cohorts.Commands.EditCohort;
 using Application.UserManagement.Cohorts.Commands.CreateCohort;
+using Application.UserManagement.Cohorts.Queries.GetCohortDetails;
+using Application.UserManagement.Cohorts.Queries.GetCohorts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,12 +23,12 @@ namespace SMS.API.Controllers.User
             return ResultHandler(await Mediator.Send(new GetCohortsQuery(), cancellationToken));
         }
 
-        //[HttpGet("{id}")]
-        //[Authorize(Roles = Role.Developer)]
-        //public async Task<IActionResult> Get(int id, CancellationToken cancellationToken)
-        //{
-        //    return ResultHandler(await Mediator.Send(new GetCohortDetailsQuery { Id = id }, cancellationToken));
-        //}
+        [HttpGet("{id}")]
+        [Authorize(Roles = Role.SchoolOwner)]
+        public async Task<IActionResult> Get(int id, CancellationToken cancellationToken)
+        {
+            return ResultHandler(await Mediator.Send(new GetCohortDetailsQuery { Id = id }, cancellationToken));
+        }
 
         [HttpPost]
         [Authorize(Roles = Role.SchoolOwner)]
