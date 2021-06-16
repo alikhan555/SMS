@@ -1,5 +1,6 @@
 ﻿using Application.Common.Enums;
 using Application.InstituteManagement.Cohorts.Commands.EditCohort;
+using Application.UserManagement.Cohorts.Commands.ChangeCohortStatus;
 using Application.UserManagement.Cohorts.Commands.CreateCohort;
 using Application.UserManagement.Cohorts.Queries.GetCohortDetails;
 using Application.UserManagement.Cohorts.Queries.GetCohorts;
@@ -45,11 +46,11 @@ namespace SMS.API.Controllers.User
             return ResultHandler(await Mediator.Send(command, cancellationToken));
         }
 
-        //[HttpPut("Status")]
-        //[Authorize(Roles = Role.Developer)]
-        //public async Task<IActionResult> ChangeStatus([FromQuery] ChangeCohortStatusCommand command, CancellationToken cancellationToken)
-        //{
-        //    return ResultHandler(await Mediator.Send(command, cancellationToken));
-        //}
+        [HttpPut("Status")]
+        [Authorize(Roles = Role.SchoolOwner)]
+        public async Task<IActionResult> ChangeStatus([FromQuery] ChangeCohortStatusCommand command, CancellationToken cancellationToken)
+        {
+            return ResultHandler(await Mediator.Send(command, cancellationToken));
+        }
     }
 }
