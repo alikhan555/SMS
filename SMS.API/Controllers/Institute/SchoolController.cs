@@ -4,6 +4,7 @@ using Application.InstituteManagement.Schools.Commands.CreateSchool;
 using Application.InstituteManagement.Schools.Commands.EditSchool;
 using Application.InstituteManagement.Schools.Queries.GetSchoolDetails;
 using Application.InstituteManagement.Schools.Queries.GetSchools;
+using Application.UserManagement.Cohorts.Commands.CreateCohort;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading;
