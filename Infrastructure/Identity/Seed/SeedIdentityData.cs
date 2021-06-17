@@ -16,12 +16,28 @@ namespace Infrastructure.Identity.Seed
         {
             var developerRole = new AppRole(Role.Developer);
             var schoolOwnerRole = new AppRole(Role.SchoolOwner);
+            var directorRole = new AppRole(Role.Director);
+            var accountDirectorRole = new AppRole(Role.AccountDirector);
+            var hrDirectorRole = new AppRole(Role.HrDirector);
+            var schoolDirectorRole = new AppRole(Role.SchoolDirector);
 
             if (roleManager.Roles.All(x => x.Name != developerRole.Name))
                 await roleManager.CreateAsync(developerRole);
 
             if (roleManager.Roles.All(x => x.Name != schoolOwnerRole.Name))
                 await roleManager.CreateAsync(schoolOwnerRole);
+
+            if (roleManager.Roles.All(x => x.Name != directorRole.Name))
+                await roleManager.CreateAsync(directorRole);
+
+            if (roleManager.Roles.All(x => x.Name != accountDirectorRole.Name))
+                await roleManager.CreateAsync(accountDirectorRole);
+
+            if (roleManager.Roles.All(x => x.Name != hrDirectorRole.Name))
+                await roleManager.CreateAsync(hrDirectorRole);
+
+            if (roleManager.Roles.All(x => x.Name != schoolDirectorRole.Name))
+                await roleManager.CreateAsync(schoolDirectorRole);
         }
 
         public static async Task SeedDefaultUser(UserManager<AppUser> userManager, IDateTime datetime)

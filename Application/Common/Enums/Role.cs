@@ -10,5 +10,9 @@ namespace Application.Common.Enums
     {
         public const string Developer = "Developer";
         public const string SchoolOwner = "SchoolOwner";
+        public const string Director = "Director";
+        public const string AccountDirector = "AccountDirector";
+        public const string HrDirector = "HrDirector";
+        public const string SchoolDirector = "SchoolDirector";
     }
 }
