@@ -111,5 +111,10 @@ namespace Infrastructure.Identity.Services
             var campusId = _httpContextAccessor.HttpContext.User.FindFirst("CampusId").Value;
             return int.Parse(campusId);
         }
+
+        public int GetLastUserSerialNo(int schoolId, int cohortId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

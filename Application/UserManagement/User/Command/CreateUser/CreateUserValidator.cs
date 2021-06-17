@@ -11,14 +11,14 @@ namespace Application.UserManagement.User.Command.CreateUser
     {
         public CreateUserValidator()
         {
-            RuleFor(x => x.Username).NotEmpty();
-            RuleFor(x => x.Email).NotEmpty().EmailAddress();
-            RuleFor(x => x.Roles).Must(roles => roles != null && roles.Count > 0).WithMessage("User must have one or more roles.")
-                .ForEach(role =>
-                {
-                    role.NotEmpty().WithMessage("Role must not be empty.");
-                });
-            RuleFor(x => x.Password).NotEmpty();
+            //RuleFor(x => x.Username).NotEmpty();
+            //RuleFor(x => x.Email).NotEmpty().EmailAddress();
+            //RuleFor(x => x.Roles).Must(roles => roles != null && roles.Count > 0).WithMessage("User must have one or more roles.")
+            //    .ForEach(role =>
+            //    {
+            //        role.NotEmpty().WithMessage("Role must not be empty.");
+            //    });
+            //RuleFor(x => x.Password).NotEmpty();
         }
     }
 }

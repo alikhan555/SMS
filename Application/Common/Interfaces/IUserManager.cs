@@ -18,5 +18,6 @@ namespace Application.Common.Interfaces
         Task<Result<string>> UpdateUser(AppUser user);
         int GetCurrentCampusId();
         int GetCurrentSchoolId();
+        int GetLastUserSerialNo(int schoolId, int cohortId);
     }
 }
