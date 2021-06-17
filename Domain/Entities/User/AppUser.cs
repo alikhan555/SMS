@@ -12,6 +12,7 @@ namespace Domain.Entities.User
     {
         public int SchoolId { get; set; }
         public int CampusId { get; set; }
+        public bool IsAbleToLogin { get; set; }
 
         public DateTime Created { get; set; }
         public string CreatedBy { get; set; }
