@@ -15,6 +15,7 @@ namespace Infrastructure.Persistence.Configuration.User
         {
             builder.Property(x => x.Name).IsRequired().HasMaxLength(25);
             builder.Property(x => x.Description).IsRequired().HasMaxLength(100);
+            builder.Property(x => x.Initial).IsRequired().HasMaxLength(7);
         }
     }
 }

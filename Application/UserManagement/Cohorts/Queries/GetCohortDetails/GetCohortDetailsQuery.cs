@@ -42,6 +42,7 @@ namespace Application.UserManagement.Cohorts.Queries.GetCohortDetails
                 Id = cohort.Id,
                 Name = cohort.Name,
                 Description = cohort.Description,
+                Initial = cohort.Initial,
                 EntityStatus = cohort.EntityStatus
             };
 

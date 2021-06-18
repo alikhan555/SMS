@@ -16,6 +16,7 @@ namespace Application.InstituteManagement.Cohorts.Commands.EditCohort
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public string Initial { get; set; }
     }
 
     public class EditCohortCommandHandler : IRequestHandler<EditCohortCommand, Result<int>>
@@ -41,6 +42,7 @@ namespace Application.InstituteManagement.Cohorts.Commands.EditCohort
 
             cohort.Name = request.Name;
             cohort.Description = request.Description;
+            cohort.Initial = request.Initial;
 
             await _context.SaveChangesAsync(cancellationToken);
 

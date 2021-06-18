@@ -39,6 +39,7 @@ namespace Application.UserManagement.Cohorts.Queries.GetCohorts
                     Id = x.Id,
                     Name = x.Name,
                     Description = x.Description,
+                    Initial = x.Initial,
                     EntityStatus = x.EntityStatus
                 }).ToListAsync(cancellationToken);
 

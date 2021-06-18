@@ -11,6 +11,7 @@ namespace Application.UserManagement.Cohorts.Commands.CreateCohort
     {
         public string Name { get; set; }
         public string Description { get; set; }
+        public string Initial { get; set; }
     }
 
     public class CreateCohortCommandHandler : IRequestHandler<CreateCohortCommand, Result<int>>
@@ -32,6 +33,7 @@ namespace Application.UserManagement.Cohorts.Commands.CreateCohort
             {
                 Name = request.Name,
                 Description = request.Description,
+                Initial = request.Initial,
                 SchoolId = _userManager.GetCurrentSchoolId()
             };
 
