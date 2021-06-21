@@ -21,6 +21,9 @@ namespace Application.Common.Interfaces
         
         // User Info
         public DbSet<Cohort> Cohort { get; set; }
+        public DbSet<UserProfile> UserProfile { get; set; }
+        public DbSet<UserContactInfo> UserContactInfo { get; set; }
+        public DbSet<CohortMember> CohortMember { get; set; }
 
         
         

@@ -4,11 +4,11 @@ using Application.Common.Models;
 using Domain.Entities.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Identity.Services
@@ -20,18 +20,21 @@ namespace Infrastructure.Identity.Services
         private readonly SignInManager<AppUser> _signInManager;
         private readonly TokenService _tokenService;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ISMSDbContext _dbContext;
 
         public UserManagerService(UserManager<AppUser> userManager,
             RoleManager<AppRole> roleManager,
             SignInManager<AppUser> signInManager,
             TokenService tokenService,
-            IHttpContextAccessor httpContextAccessor)
+            IHttpContextAccessor httpContextAccessor, 
+            ISMSDbContext dbContext)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
             _tokenService = tokenService;
             _httpContextAccessor = httpContextAccessor;
+            _dbContext = dbContext;
         }
 
         public async Task<Result<string>> CreateUserAsync(AppUser newUser, string password, IEnumerable<string> roles)
@@ -112,9 +115,35 @@ namespace Infrastructure.Identity.Services
             return int.Parse(campusId);
         }
 
-        public int GetLastUserSerialNo(int schoolId, int cohortId)
+        public int GetNextUserSerialNo(int schoolId, int cohortId)
         {
-            throw new NotImplementedException();
+            var serialNo = _dbContext.CohortMember
+                .Include(x => x.Cohort)
+                .Where(x => x.Cohort.SchoolId == schoolId && x.Cohort.Id == cohortId)
+                .Max(x => (int?)x.SerialNo) ?? 0;
+
+            return serialNo;
+        }
+
+        public string GenerateUserName(int schoolId, int cohortId, int serialNo)
+        {
+            var schoolInitial = _dbContext.Schools.Single(x => x.Id == schoolId).Initial;
+            var cohortInitial = _dbContext.Cohort.Single(x => x.Id == cohortId).Initial;
+
+            return $"{schoolInitial}-{cohortInitial}-{serialNo}";
+        }
+
+        public string GenerateRandomPassword()
+        {
+            var smallAlpha = "abcdefghijklmnopqrstuvwxyz";
+            var capitalAlpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            var number = "1234567890";
+            var specialChar = "!@#$%^&*()_";
+
+            var random = new Random();
+            string password = $"{smallAlpha[random.Next(0, 25)]}{smallAlpha[random.Next(0, 25)]}{capitalAlpha[random.Next(0, 25)]}{capitalAlpha[random.Next(0, 25)]}{specialChar[random.Next(0, 10)]}{number[random.Next(0, 10)]}{number[random.Next(0, 9)]}{number[random.Next(0, 9)]}{number[random.Next(0, 9)]}";
+
+            return password;
         }
     }
 }

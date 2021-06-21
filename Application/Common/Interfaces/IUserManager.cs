@@ -18,6 +18,8 @@ namespace Application.Common.Interfaces
         Task<Result<string>> UpdateUser(AppUser user);
         int GetCurrentCampusId();
         int GetCurrentSchoolId();
-        int GetLastUserSerialNo(int schoolId, int cohortId);
+        int GetNextUserSerialNo(int schoolId, int cohortId);
+        string GenerateUserName(int schoolId, int cohortId, int serialNo);
+        string GenerateRandomPassword();
     }
 }

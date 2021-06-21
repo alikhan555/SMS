@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Application.UserManagement.User.Command.CreateUser
 {
-    public class CreateUserValidator : AbstractValidator<CreateUserCommand>
+    public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
     {
-        public CreateUserValidator()
+        public CreateUserCommandValidator()
         {
             //RuleFor(x => x.Username).NotEmpty();
             //RuleFor(x => x.Email).NotEmpty().EmailAddress();

@@ -34,7 +34,10 @@ namespace Infrastructure.Persistence
         
         // User Info
         public DbSet<Cohort> Cohort { get; set; }
+        public DbSet<UserProfile> UserProfile { get; set; }
+        public DbSet<UserContactInfo> UserContactInfo { get; set; }
         public DbSet<CohortMember> CohortMember { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -44,17 +47,19 @@ namespace Infrastructure.Persistence
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
+            var httpContext = new HttpContextAccessor().HttpContext;
+            string currentUserId = httpContext != null ? httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier) : "system";
+
             foreach (EntityEntry<IAuditableEntity> entry in ChangeTracker.Entries<IAuditableEntity>())
             {
-                var httpContext = new HttpContextAccessor().HttpContext;
-                string currentUserId = httpContext != null ? httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier) : "system";
-                
                 switch (entry.State)
                 {
                     case EntityState.Added:
                         entry.Entity.CreatedBy = currentUserId;
                         entry.Entity.Created = _dateTime.UtcNow;
                         entry.Entity.EntityStatus = EntityStatus.Active;
+                        entry.Entity.LastModifiedBy = currentUserId;
+                        entry.Entity.LastModified = _dateTime.UtcNow;
                         break;
 
                     case EntityState.Modified:

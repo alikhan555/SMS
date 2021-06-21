@@ -12,6 +12,7 @@ namespace Domain.Entities.User
         public int Id { get; set; }
         public string MemberId { get; set; }
         public int CohortId { get; set; }
+        public int SerialNo { get; set; }
 
 
 

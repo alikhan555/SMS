@@ -16,8 +16,8 @@ namespace Infrastructure.Persistence.Configuration.User
             builder.Property(x => x.MobileNo).HasMaxLength(20);
             builder.Property(x => x.GuardianMobileNo).HasMaxLength(20);
             builder.Property(x => x.HomeLandline).HasMaxLength(20);
-            builder.Property(x => x.Email).HasMaxLength(20);
-            builder.Property(x => x.GuardianEmail).HasMaxLength(20);
+            builder.Property(x => x.Email).HasMaxLength(100);
+            builder.Property(x => x.GuardianEmail).HasMaxLength(100);
 
             builder
                 .HasOne(x => x.UserProfile)

@@ -6,7 +6,6 @@ using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,15 +13,9 @@ namespace Application.UserManagement.User.Command.CreateUser
 {
     public class CreateUserCommand : IRequest<Result<string>>
     {
-        //public string Email { get; set; } no required
-        //public string Username { get; set; } auto generate
-        //public string Password { get; set; } generate randomly
-
         public bool IsAbleToLogin { get; set; }
         public List<string> Roles { get; set; }
 
-        public string Id { get; set; }
-        public int SerialNo { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string GuardianName { get; set; }
@@ -30,8 +23,6 @@ namespace Application.UserManagement.User.Command.CreateUser
         public string Gender { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string Cnic { get; set; }
-        public string PhotoPath { get; set; }
-        public int SchoolId { get; set; }
         public int CampusId { get; set; }
         public string Qualification { get; set; }
 
@@ -59,17 +50,21 @@ namespace Application.UserManagement.User.Command.CreateUser
 
         public async Task<Result<string>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            var password = "RendomPassword";
+            var currentSchoolId = _userManager.GetCurrentSchoolId();
+            var nextSerialNo = _userManager.GetNextUserSerialNo(currentSchoolId, request.CohortIds.First()) + 1;
+            var userName = _userManager.GenerateUserName(currentSchoolId, request.CohortIds.First(), nextSerialNo);
+            var password = _userManager.GenerateRandomPassword();
 
             var user = new AppUser()
             {
-                UserName = "Configuration Required",
+                UserName = userName,
                 Email = request.Email,
                 IsAbleToLogin = request.IsAbleToLogin,
+                SchoolId = currentSchoolId,
+                CampusId = request.CampusId,
 
                 UserProfile = new UserProfile()
                 {
-                    SerialNo = 0, //"Configuration Required";
                     FirstName = request.FirstName,
                     LastName = request.LastName,
                     GuardianName = request.GuardianName,
@@ -94,7 +89,8 @@ namespace Application.UserManagement.User.Command.CreateUser
                     CohortMembers = request.CohortIds.Select(x =>
                         new CohortMember()
                         {
-                            CohortId = x
+                            CohortId = x,
+                            SerialNo = nextSerialNo
                         })
                     .ToList()
                 }
@@ -105,8 +101,7 @@ namespace Application.UserManagement.User.Command.CreateUser
             if (identityResult.Errors != null && identityResult.Errors.Count() > 0)
                 return Result<string>.Failure(HttpStatus.BadRequest, identityResult.Errors);
 
-            return Result<string>.Success("not implemented.");
+            return Result<string>.Success(user.Id);
         }
     }
-
 }

@@ -9,9 +9,13 @@ namespace Domain.Entities.User
 {
     public class UserProfile : AuditableEntity
     {
+        public UserProfile()
+        {
+            CohortMembers = new HashSet<CohortMember>();
+        }
+
         // ForegnKey AppUserID
         public string Id { get; set; }
-        public int SerialNo { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string GuardianName { get; set; }
